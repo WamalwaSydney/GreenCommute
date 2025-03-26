@@ -42,41 +42,27 @@ def index():
     """Render the main page of the application."""
     return render_template('index.html')
 
-@app.route('/api/weather')
+@app.route('/api/weather', methods=['GET'])
 def get_weather():
-    """Fetch weather data for a given city."""
-    city = request.args.get('city', 'Kigali')
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_API_KEY}&units=metric"
-    
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+
+    if not lat or not lon:
+        return jsonify({"success": False, "error": "Latitude and longitude required"}), 400
+
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric"
+
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Raise an exception for 4XX/5XX responses
-        
         data = response.json()
-        weather = {
-            "temperature": data["main"]["temp"],
-            "description": data["weather"][0]["description"],
-            "icon": data["weather"][0]["icon"],
-            "humidity": data["main"]["humidity"],
-            "wind_speed": data["wind"]["speed"],
-            "city": data["name"],
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-        return jsonify({"success": True, "weather": weather})
-    
-    except requests.exceptions.RequestException as e:
-        app.logger.error(f"Weather API error: {str(e)}")
-        return jsonify({
-            "success": False, 
-            "error": "Failed to fetch weather data. Please try again later."
-        }), 500
-    
-    except (KeyError, ValueError, TypeError) as e:
-        app.logger.error(f"Weather data parsing error: {str(e)}")
-        return jsonify({
-            "success": False, 
-            "error": "Failed to process weather data. Please try again later."
-        }), 500
+
+        if response.status_code != 200:
+            return jsonify({"success": False, "error": data.get("message", "Weather API error")}), response.status_code
+
+        return jsonify({"success": True, "weather": data})
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route('/api/route')
 def get_route():

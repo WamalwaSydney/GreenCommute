@@ -274,10 +274,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update savings message
         if (bestOption.carbon_saved_percentage > 80) {
-            savingsMessage.textContent = 'Excellent choice! You're making a significant difference!';
+            savingsMessage.textContent = 'Excellent choice! You are making a significant difference!';
             savingsMessage.className = 'alert alert-success';
         } else if (bestOption.carbon_saved_percentage > 50) {
-            savingsMessage.textContent = 'Great job! You're helping reduce carbon emissions!';
+            savingsMessage.textContent = 'Great job! You are helping reduce carbon emissions!';
             savingsMessage.className = 'alert alert-success';
         } else if (bestOption.carbon_saved_percentage > 20) {
             savingsMessage.textContent = 'Good start! Consider greener options when possible.';
@@ -326,3 +326,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+})
