@@ -4,7 +4,7 @@ GreenCommute is a web application designed to promote eco-friendly commuting opt
 
 ## Features
 
-- Transport Routes**: Transportation information using an external API.
+- Transport Routes: Transportation information using an external API.
 - **Carbon Footprint Tracker**: Estimates CO2 emissions based on travel habits.
 - **Sorting & Filtering**: Users can filter rides by location, time, and available seats.
 - **Secure Authentication**: User data is securely stored and managed.
