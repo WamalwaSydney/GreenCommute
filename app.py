@@ -8,7 +8,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # Load environment variables from .env file
-load_dotenv(dotenv_path="venv/.env")
+load_dotenv(dotenv_path="/GreenCommute/venv/.env")
 
 app = Flask(__name__)
 
